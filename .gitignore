@@ -1,5 +1,8 @@
 .idea/
+.metadata/
 java/WordCounter/nbproject/private/
 java/WordCounter/build.xml
 java/WordCounter/manifest.mf
 java/WordCounter/nbproject/
+/java/WordCounter/dist/
+/java/WordCounter/build/
