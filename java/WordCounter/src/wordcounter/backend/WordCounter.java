@@ -19,7 +19,12 @@
 
 package wordcounter.backend;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WordCounter {
     private File directoryOrFile;
@@ -39,5 +44,44 @@ public class WordCounter {
 
     public void setWord(String word) {
         this.word = word;
+    }
+    
+    public List<String> getWordOccurences() throws IOException {
+    	List<String> wordOccurences = new ArrayList<>();
+    	FileReader fr = new FileReader(directoryOrFile);
+    	BufferedReader br = new BufferedReader(fr);
+    	String line;
+    	int lineCount = 0;
+    	int wordOccurenceCount = 0;
+    	
+    	wordOccurences.add(directoryOrFile.getAbsolutePath() + ":\n");
+    	
+    	while ((line = br.readLine()) != null) {
+    		lineCount++;
+    		
+			if (line.contains(word)) {
+				wordOccurences.add("\"" + word + "\"" +  " found on line " + lineCount + ": " + line + "\n");
+				wordOccurenceCount++;
+			}
+		}
+    	
+    	wordOccurences.add("\"" + word + "\"" + " used " + wordOccurenceCount + " times.\n");
+    	
+    	fr.close();
+    	br.close();
+    	
+    	return wordOccurences;       
+    }
+    
+    public boolean wordCounterFieldsAreSet() {
+    	if (word.equals("")) {
+    		return false;
+    	}
+    	
+    	if (directoryOrFile.equals(null)) {
+    		return false;
+    	}
+    	
+    	return true;
     }
 }
