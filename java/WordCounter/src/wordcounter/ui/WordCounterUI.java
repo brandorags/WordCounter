@@ -38,6 +38,7 @@ import java.io.File;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 
 public class WordCounterUI {
 
@@ -137,19 +138,15 @@ public class WordCounterUI {
 			}
 		});
 		
+		JScrollPane wordCounterOutputScrollPane = new JScrollPane(wordCounterOutputTextArea);
+		
 		GroupLayout groupLayout = new GroupLayout(frmWordcounter.getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addContainerGap(454, Short.MAX_VALUE)
-					.addComponent(quitButton)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(runButton)
-					.addContainerGap())
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(wordCounterOutputTextArea, GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE)
+						.addComponent(wordCounterOutputScrollPane, GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(locationLabel)
@@ -159,7 +156,11 @@ public class WordCounterUI {
 								.addComponent(keyWordTextField)
 								.addComponent(locationTextField, GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(searchButton)))
+							.addComponent(searchButton))
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addComponent(quitButton)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(runButton)))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -175,12 +176,12 @@ public class WordCounterUI {
 						.addComponent(keyWordLabel)
 						.addComponent(keyWordTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(wordCounterOutputTextArea, GroupLayout.PREFERRED_SIZE, 227, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(wordCounterOutputScrollPane, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(runButton)
 						.addComponent(quitButton))
-					.addContainerGap(7, Short.MAX_VALUE))
+					.addContainerGap())
 		);
 		frmWordcounter.getContentPane().setLayout(groupLayout);
 	}
