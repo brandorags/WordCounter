@@ -90,11 +90,15 @@ public class WordCounterUI {
 		keyWordTextField = new JTextField();
 		keyWordTextField.setColumns(10);
 		
+		/**
+		 * Search button functionality
+		 */
 		JButton searchButton = new JButton("Search...");
 		searchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser searchBox = new JFileChooser();
 				searchBox.setCurrentDirectory(new File(System.getProperty("user.home")));
+				searchBox.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 				searchBox.showOpenDialog(frmWordcounter);
 				
 				String path = searchBox.getSelectedFile().getAbsolutePath();
@@ -104,6 +108,9 @@ public class WordCounterUI {
 			}
 		});
 		
+		/**
+		 * Run button functionality
+		 */
 		JButton runButton = new JButton("Run");
 		runButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -131,6 +138,9 @@ public class WordCounterUI {
 			}
 		});
 		
+		/**
+		 * Quit button functionality
+		 */
 		JButton quitButton = new JButton("Quit");
 		quitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -145,19 +155,21 @@ public class WordCounterUI {
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addComponent(wordCounterOutputScrollPane, GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(locationLabel)
 								.addComponent(keyWordLabel))
 							.addGap(6)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(keyWordTextField)
-								.addComponent(locationTextField, GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(searchButton))
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(locationTextField, GroupLayout.PREFERRED_SIZE, 336, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(searchButton))
+								.addComponent(keyWordTextField, GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE))
+							.addGap(101))
+						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(quitButton)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(runButton)))
@@ -184,5 +196,6 @@ public class WordCounterUI {
 					.addContainerGap())
 		);
 		frmWordcounter.getContentPane().setLayout(groupLayout);
+		frmWordcounter.setLocationRelativeTo(null);
 	}
 }

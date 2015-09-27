@@ -46,33 +46,6 @@ public class WordCounter {
         this.word = word;
     }
     
-    public List<String> getWordOccurences() throws IOException {
-    	List<String> wordOccurences = new ArrayList<>();
-    	FileReader fr = new FileReader(directoryOrFile);
-    	BufferedReader br = new BufferedReader(fr);
-    	String line;
-    	int lineCount = 0;
-    	int wordOccurenceCount = 0;
-    	
-    	wordOccurences.add(directoryOrFile.getAbsolutePath() + ":\n");
-    	
-    	while ((line = br.readLine()) != null) {
-    		lineCount++;
-    		
-			if (line.contains(word)) {
-				wordOccurences.add("\"" + word + "\"" +  " found on line " + lineCount + ": " + line + "\n");
-				wordOccurenceCount++;
-			}
-		}
-    	
-    	wordOccurences.add("\"" + word + "\"" + " used " + wordOccurenceCount + " times.\n");
-    	
-    	fr.close();
-    	br.close();
-    	
-    	return wordOccurences;       
-    }
-    
     public boolean wordCounterFieldsAreSet() {
     	if (word.equals("")) {
     		return false;
@@ -83,5 +56,84 @@ public class WordCounter {
     	}
     	
     	return true;
+    }
+    
+    public List<String> getWordOccurences() throws IOException {
+    	if (directoryOrFile.isFile()) {
+    		return getSingleFileOutput(directoryOrFile);	
+    	}
+    	
+    	File[] files = directoryOrFile.listFiles();
+    	return getMultipleFileOutput(files);
+    }
+    
+    private List<String> getSingleFileOutput(File file) throws IOException {
+    	List<String> singleFileWordOccurences = new ArrayList<>();
+    	
+    	FileReader fr = null;
+    	BufferedReader br = null;
+    	String line;
+    	int lineCount = 0;
+    	int wordOccurenceCount = 0;
+    	try {
+        	fr = new FileReader(file);
+        	br = new BufferedReader(fr);
+        	
+        	singleFileWordOccurences.add(file.getAbsolutePath() + ":\n");
+        	
+        	while ((line = br.readLine()) != null) {
+        		lineCount++;
+        		
+    			if (line.contains(" " + word + " ")) {
+    				singleFileWordOccurences.add("\"" + word + "\"" +  " found on line " + lineCount + ": " + line + "\n");
+    				wordOccurenceCount++;
+    			}
+    		}
+        	
+        	singleFileWordOccurences.add("\"" + word + "\"" + " found " + wordOccurenceCount + " times.\n");	
+		} finally {
+	    	fr.close();
+	    	br.close();	
+		}
+    	
+    	return singleFileWordOccurences;
+    }
+    
+    private List<String> getMultipleFileOutput(File[] files) throws IOException {
+    	List<String> multipleFileWordOccurences = new ArrayList<>();
+    	
+    	for (File file : files) {
+			if (!file.isFile()) {
+				continue;
+			}
+			
+			BufferedReader br = null;
+			FileReader fr = null;
+	    	String line;
+	    	int lineCount = 0;
+	    	int wordOccurenceCount = 0;
+			try {
+				fr = new FileReader(file);
+				br = new BufferedReader(fr);
+
+		    	multipleFileWordOccurences.add(file.getAbsolutePath() + ":\n");
+		    	
+		    	while ((line = br.readLine()) != null) {
+		    		lineCount++;
+		    		
+					if (line.contains(" " + word + " ")) {
+						multipleFileWordOccurences.add("\"" + word + "\"" +  " found on line " + lineCount + ": " + line + "\n");
+						wordOccurenceCount++;
+					}
+				}
+		    	
+		    	multipleFileWordOccurences.add("\"" + word + "\"" + " found " + wordOccurenceCount + " times.\n");
+			} finally {
+		    	fr.close();
+		    	br.close();
+			}
+		}
+    	
+    	return multipleFileWordOccurences;
     }
 }
