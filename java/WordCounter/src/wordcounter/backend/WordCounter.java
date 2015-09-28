@@ -84,6 +84,9 @@ public class WordCounter {
         	while ((line = br.readLine()) != null) {
         		lineCount++;
         		
+        		//TODO: this only checks for words between two spaces
+        		//so we must account for words that begin at the beginning
+        		//and end of lines as well
     			if (line.contains(" " + word + " ")) {
     				singleFileWordOccurences.add("\"" + word + "\"" +  " found on line " + lineCount + ": " + line + "\n");
     				wordOccurenceCount++;
@@ -121,6 +124,9 @@ public class WordCounter {
 		    	while ((line = br.readLine()) != null) {
 		    		lineCount++;
 		    		
+	        		//TODO: this only checks for words between two spaces
+	        		//so we must account for words that begin at the beginning
+	        		//and end of lines as well
 					if (line.contains(" " + word + " ")) {
 						multipleFileWordOccurences.add("\"" + word + "\"" +  " found on line " + lineCount + ": " + line + "\n");
 						wordOccurenceCount++;

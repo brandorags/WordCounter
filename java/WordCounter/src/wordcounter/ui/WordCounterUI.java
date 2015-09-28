@@ -123,9 +123,10 @@ public class WordCounterUI {
 					
 					runButton.setEnabled(false);
 					searchButton.setEnabled(false);
-					wordCounterOutputTextArea.setText("");
 					
+					wordCounterOutputTextArea.setText("Finding word occurences...");					
 					List<String> textAreaOutput = wordCounter.getWordOccurences();
+					wordCounterOutputTextArea.setText("");
 					for (String line : textAreaOutput) {
 						wordCounterOutputTextArea.append(line);
 					}
@@ -197,5 +198,6 @@ public class WordCounterUI {
 		);
 		frmWordcounter.getContentPane().setLayout(groupLayout);
 		frmWordcounter.setLocationRelativeTo(null);
+		frmWordcounter.getRootPane().setDefaultButton(runButton);
 	}
 }
