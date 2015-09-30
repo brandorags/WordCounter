@@ -25,6 +25,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class WordCounter {
     private File directoryOrFile;
@@ -81,13 +83,13 @@ public class WordCounter {
         	
         	singleFileWordOccurences.add(file.getAbsolutePath() + ":\n");
         	
+        	String regex = "^" + word + "\\W|\\s" + word + "\\s|[\\W]" + word + "[\\?|\\!|\\.|\\s|\\t|\\n]$";
+        	Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
         	while ((line = br.readLine()) != null) {
         		lineCount++;
         		
-        		//TODO: this only checks for words between two spaces
-        		//so we must account for words that begin at the beginning
-        		//and end of lines as well
-    			if (line.contains(" " + word + " ")) {
+        		Matcher matcher = pattern.matcher(line);
+    			if (matcher.find()) {
     				singleFileWordOccurences.add("\"" + word + "\"" +  " found on line " + lineCount + ": " + line + "\n");
     				wordOccurenceCount++;
     			}
@@ -104,6 +106,8 @@ public class WordCounter {
     
     private List<String> getMultipleFileOutput(File[] files) throws IOException {
     	List<String> multipleFileWordOccurences = new ArrayList<>();
+    	String regex = "^" + word + "\\W|\\s" + word + "\\s|[\\W]" + word + "[\\?|\\!|\\.|\\s|\\t|\\n]$";
+    	Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
     	
     	for (File file : files) {
 			if (!file.isFile()) {
@@ -124,10 +128,8 @@ public class WordCounter {
 		    	while ((line = br.readLine()) != null) {
 		    		lineCount++;
 		    		
-	        		//TODO: this only checks for words between two spaces
-	        		//so we must account for words that begin at the beginning
-	        		//and end of lines as well
-					if (line.contains(" " + word + " ")) {
+		    		Matcher matcher = pattern.matcher(line);
+					if (matcher.find()) {
 						multipleFileWordOccurences.add("\"" + word + "\"" +  " found on line " + lineCount + ": " + line + "\n");
 						wordOccurenceCount++;
 					}
